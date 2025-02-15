@@ -160,7 +160,9 @@ const deleteTripDetails = async (req, res) => {
 // Post trip details
 
 const addTripDetails = async (req, res) => {
-  const { id, ...params } = req.body;
+  const { id, list, ...params } = req.body;
+  const cleanedList = list.flat();
+  console.log(list);
   console.log(req.body);
 
   if (!params.destination || !params.user_id) {
@@ -168,37 +170,34 @@ const addTripDetails = async (req, res) => {
       .status(400)
       .json({ message: "Please provide all required information" });
   }
+
   try {
     const result = await knex("trips").insert(params);
     const newTripId = result[0];
+
     const createdTrip = await knex("trips").where({ id: newTripId }).first();
 
-    // add another knex call to items to then add items using tripID
     res.status(201).json(createdTrip);
+
+    try {
+      await knex("items").insert(
+        cleanedList.map(({ item, category, link, quantity }) => ({
+          user_id: 1,
+          item: item || "Unknown Item",
+          trip_id: newTripId,
+          category: category || "Uncategorized",
+          link: link || null,
+          quantity: quantity || null,
+        }))
+      );
+    } catch (itemError) {
+      console.error("Error inserting items:", itemError);
+    }
   } catch (err) {
     console.error(`Error posting new trip`, err);
     res.status(500).json({ message: `There was an error making new trip` });
   }
 };
-
-// const addItemsForTrip = async (req, res) => {
-//   const { id, trip_id, ...params } = req.body;
-
-//   if (!params.destination || !params.trip_id || !params.user_id) {
-//     return res
-//       .status(400)
-//       .json({ message: "Please provide all required information" });
-//   }
-//   try {
-//     const result = await knex("items").insert(params);
-//     const newItemId = result[0];
-//     const createdItem = await knex("items").where({ id: newItemId }).first();
-//     res.status(201).json(createdItem);
-//   } catch (err) {
-//     console.error(`Error posting new item`, err);
-//     res.status(500).json({ message: `There was an error making new item` });
-//   }
-// };
 
 export {
   getAllTrips,
