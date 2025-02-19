@@ -76,11 +76,12 @@ async function generatePackingList(formData) {
   1. **Think like a seasoned traveler** who has been on this type of trip multiple times.  
   2. Don't forget essentials** like socks, tshirts etc, but also include more niche suggestions. 
   3. Add relevant **links** where appropriate (e.g., to get information).  
-  4. For each category, include **quantities** only when necessary (e.g., "3 pairs of socks," "1 hoodie").  
+  4. For each category, include **quantities** only when necessary (e.g., item:Socks quantity:3).  
   5. **Ensure the response is only a valid JSON object** with no extra text, explanations, or formatting.  
   6. Provide **relevant links or tips** like visa information, plug type adapters, weather, and local recommendations for the specified dates.  
   7. **Be specific** in your item lists. Items should reflect the **unique** nature of the trip, such as festival-specific gear, camping essentials, etc.
   8. Don't include printed copies.
+  9. Add exhaustive list of clothes
 
 
   ---
@@ -94,7 +95,7 @@ async function generatePackingList(formData) {
       messages: [
         {
           role: "system",
-          content: `You are an expert travel assistant who creates highly specific, experience-based packing lists tailored to unique trips. Your lists are not generic; they include insider tips, personal hacks, and unconventional but useful items that experienced travelers swear by. You generate structured JSON packing lists.`,
+          content: `You are an expert travel assistant who creates highly specific, experience-based packing lists tailored to unique trips. You generate structured JSON packing lists.`,
         },
         {
           role: "user",

@@ -50,64 +50,6 @@ const getItemsForTrip = async (req, res) => {
   }
 };
 
-//GET user trips ??
-
-const getTripsForUser = async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const trips = await knex("trips").where({ user_id: userId });
-
-    if (trips.length === 0) {
-      return res.status(404).send("No trips found for this user");
-    }
-
-    res.status(200).json(trips);
-  } catch (err) {
-    console.error("Error getting trips for user:", err);
-    res.status(500).send("Error getting trips for user");
-  }
-};
-
-const getSingleTripForUser = async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const tripId = req.params.id;
-    const items = await knex("trips").where({
-      id: tripId,
-      user_id: userId,
-    });
-
-    if (items.length === 0) {
-      return res.status(404).send("No trips found");
-    }
-
-    res.status(200).json(items);
-  } catch (err) {
-    console.error("Error fetching  trip:", err);
-    res.status(500).send("Error getting trip");
-  }
-};
-
-const getItemsForUserTrip = async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const tripId = req.params.id;
-    const items = await knex("items").where({
-      trip_id: tripId,
-      user_id: userId,
-    });
-
-    if (items.length === 0) {
-      return res.status(404).send("No items were found for this trip");
-    }
-
-    res.status(200).json(items);
-  } catch (err) {
-    console.error("Error fetching items for the trip:", err);
-    res.status(500).send("Error getting items for the trip");
-  }
-};
-
 // PATCH user trip details
 
 const updateTripDetails = async (req, res) => {
@@ -133,6 +75,37 @@ const updateTripDetails = async (req, res) => {
   } catch (err) {
     console.error("Error updating trip", err);
     res.status(500).send("Error updating trip details");
+  }
+};
+
+// PATCH trip items
+
+const updateTripItems = async (req, res) => {
+  try {
+    const tripId = req.params.id;
+    const { id, item, link, quantity } = req.body;
+    const updatedRows = await knex("items")
+      .where({ id, trip_id: tripId })
+      .update({
+        item,
+        link,
+        quantity,
+        updated_at: knex.fn.now(),
+      });
+
+    const itemExists = await knex("items")
+      .where({ id, trip_id: tripId })
+      .first();
+    if (!itemExists) {
+      return res.status(404).json({ error: "Item not found" });
+    }
+
+    const updatedTrip = await knex("items").where({ id: id }).first();
+
+    res.status(200).json(updatedTrip);
+  } catch (err) {
+    console.error("Error updating item", err);
+    res.status(500).send("Error updating item details");
   }
 };
 
@@ -206,4 +179,5 @@ export {
   updateTripDetails,
   deleteTripDetails,
   addTripDetails,
+  updateTripItems,
 };

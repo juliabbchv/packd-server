@@ -1,6 +1,5 @@
 import express from "express";
 import { generatePackingList } from "../controllers/API.js";
-import { addTripDetails } from "../controllers/trips-controller.js";
 
 const router = express.Router();
 

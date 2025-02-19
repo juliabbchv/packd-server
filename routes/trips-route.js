@@ -7,6 +7,7 @@ import {
   updateTripDetails,
   deleteTripDetails,
   addTripDetails,
+  updateTripItems,
 } from "../controllers/trips-controller.js";
 
 const router = express.Router();
@@ -17,11 +18,6 @@ router
   .get(getSingleTrip)
   .patch(updateTripDetails)
   .delete(deleteTripDetails);
-router.route("/:id/items").get(getItemsForTrip);
-
-// Mock Auth
-// router.route("/user").get(mockAuth, getTripsForUser);
-// router.route("/user/:id").get(mockAuth, getSingleTripForUser);
-// router.route("/user/:id/items/").get(mockAuth, getItemsForUserTrip);
+router.route("/:id/items").get(getItemsForTrip).patch(updateTripItems);
 
 export default router;
