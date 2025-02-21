@@ -4,8 +4,6 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const APIKEY = process.env.OPENAI_API;
-const projectID = process.env.OPENAI_PROJECT;
-const orgID = process.env.OPENAI_ORG;
 
 const openai = new OpenAI({
   apiKey: APIKEY,
