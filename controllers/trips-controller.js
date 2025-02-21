@@ -124,7 +124,7 @@ const deleteTripDetails = async (req, res) => {
     await knex("trips").where({ id: tripId }).delete();
     res
       .status(204)
-      .json({ message: `Inventory with ID ${tripId} deleted successfully` });
+      .json({ message: `Trip with ID ${tripId} deleted successfully` });
   } catch (err) {
     console.error("Error deleting trip", err);
     res.status(500).json({ message: "Error deleting trip" });
@@ -205,4 +205,5 @@ export {
   addTripDetails,
   updateTripItems,
   addNewItem,
+  deleteTripItem,
 };

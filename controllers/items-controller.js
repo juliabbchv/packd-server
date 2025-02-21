@@ -12,4 +12,22 @@ const getAllItems = async (req, res) => {
   }
 };
 
-export { getAllItems };
+const deleteTripItem = async (req, res) => {
+  try {
+    const item = await knex("items").where({ id: req.params.id }).first();
+    console.log(item);
+
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    await knex("items").where({ id: req.params.id }).delete();
+
+    res.status(204).json({ message: "Item deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting item:", err);
+    res.status(500).json({ message: "There was an error deleting the item" });
+  }
+};
+
+export { getAllItems, deleteTripItem };
