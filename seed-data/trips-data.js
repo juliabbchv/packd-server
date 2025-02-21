@@ -37,7 +37,7 @@ export default [
     activities: "Sightseeing, Dining/Going Out",
     trip_name: "Holidays in Rome",
     isPublic: true,
-    isSaved: true,
+    isSaved: false,
   },
   {
     id: 5,
@@ -47,7 +47,7 @@ export default [
     activities: "Water Sports, Hiking ",
     trip_name: "Surf trip in Sydney",
     isPublic: true,
-    isSaved: true,
+    isSaved: false,
   },
   {
     id: 6,
@@ -67,7 +67,7 @@ export default [
     activities: "Wine Tasting, Sunset Cruises",
     trip_name: "Aegean Bliss in Santorini",
     isPublic: true,
-    isSaved: true,
+    isSaved: false,
   },
   {
     id: 8,

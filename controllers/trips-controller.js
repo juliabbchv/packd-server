@@ -6,7 +6,9 @@ const knex = initKnex(configuration);
 
 const getAllTrips = async (req, res) => {
   try {
-    const data = await knex("trips");
+    const data = await knex("trips")
+      .select("trips.*", "users.name as user_name")
+      .join("users", "trips.user_id", "=", "users.id");
     res.status(200).json(data);
   } catch {
     console.error("Error getting trips:", err);
@@ -17,9 +19,10 @@ const getAllTrips = async (req, res) => {
 const getSingleTrip = async (req, res) => {
   try {
     const tripId = req.params.id;
-    const items = await knex("trips").where({
-      id: tripId,
-    });
+    const items = await knex("trips")
+      .select("trips.*", "users.name as user_name")
+      .join("users", "trips.user_id", "=", "users.id")
+      .where("trips.id", tripId);
 
     if (items.length === 0) {
       return res.status(404).send("No items were found for this trip");
@@ -50,7 +53,7 @@ const getItemsForTrip = async (req, res) => {
   }
 };
 
-// PATCH user trip details
+// PATCH
 
 const updateTripDetails = async (req, res) => {
   try {
@@ -77,8 +80,6 @@ const updateTripDetails = async (req, res) => {
     res.status(500).send("Error updating trip details");
   }
 };
-
-// PATCH trip items
 
 const updateTripItems = async (req, res) => {
   try {
@@ -109,7 +110,7 @@ const updateTripItems = async (req, res) => {
   }
 };
 
-// Delete user trip
+// DELETE
 
 const deleteTripDetails = async (req, res) => {
   try {
@@ -130,7 +131,7 @@ const deleteTripDetails = async (req, res) => {
   }
 };
 
-// Post trip details
+// POST
 
 const addTripDetails = async (req, res) => {
   const { id, list, ...params } = req.body;
@@ -169,8 +170,6 @@ const addTripDetails = async (req, res) => {
     res.status(500).json({ message: `There was an error making new trip` });
   }
 };
-
-// Post new items
 
 const addNewItem = async (req, res) => {
   const { id, trip_id, ...params } = req.body;
