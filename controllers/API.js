@@ -29,7 +29,6 @@ async function generatePackingList(formData) {
 
   console.log(formData);
 
-  // Construct the prompt for OpenAI
   const prompt = `
   Generate a categorized packing list for a trip. Return a JSON object formatted like this:
   {
@@ -46,7 +45,7 @@ async function generatePackingList(formData) {
     {"item": "string", "category": "before you go", "link": "url"},
     {"item": "string", "category":"documents"," "link": "url"},
     {"item": "string", "category":"clothes", "quantity": number "link": "url"},
-    {"item": "string", "category":"activity-related items",  "quantity": number "link": "url"},
+    {"item": "string", "category":"activity-items",  "quantity": number "link": "url"},
     {"item": "string", "category":"toiletries", "quantity": number, "link": "url"},
     {"item": "string", "category":"tech", "link": "url"},
     {"item": "string", "category":"health", "quantity": number, "link": "url"},

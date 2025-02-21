@@ -135,8 +135,6 @@ const deleteTripDetails = async (req, res) => {
 const addTripDetails = async (req, res) => {
   const { id, list, ...params } = req.body;
   const cleanedList = list.flat();
-  console.log(list);
-  console.log(req.body);
 
   if (!params.destination || !params.user_id) {
     return res
@@ -172,6 +170,33 @@ const addTripDetails = async (req, res) => {
   }
 };
 
+// Post new items
+
+const addNewItem = async (req, res) => {
+  const { id, trip_id, ...params } = req.body;
+
+  if (!params.item || !trip_id) {
+    return res
+      .status(400)
+      .json({ message: "Please provide all required information" });
+  }
+
+  try {
+    const result = await knex("items").insert({ ...params, trip_id });
+
+    const newItemId = result[0];
+
+    const createdItem = await knex("items").where({ id: newItemId }).first();
+
+    res.status(201).json(createdItem);
+  } catch (err) {
+    console.error(`Error posting new item`, err);
+    res
+      .status(500)
+      .json({ message: `There was an error creating the new item` });
+  }
+};
+
 export {
   getAllTrips,
   getItemsForTrip,
@@ -180,4 +205,5 @@ export {
   deleteTripDetails,
   addTripDetails,
   updateTripItems,
+  addNewItem,
 };

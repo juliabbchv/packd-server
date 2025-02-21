@@ -8,6 +8,7 @@ import {
   deleteTripDetails,
   addTripDetails,
   updateTripItems,
+  addNewItem,
 } from "../controllers/trips-controller.js";
 
 const router = express.Router();
@@ -18,6 +19,10 @@ router
   .get(getSingleTrip)
   .patch(updateTripDetails)
   .delete(deleteTripDetails);
-router.route("/:id/items").get(getItemsForTrip).patch(updateTripItems);
+router
+  .route("/:id/items")
+  .get(getItemsForTrip)
+  .patch(updateTripItems)
+  .post(addNewItem);
 
 export default router;
