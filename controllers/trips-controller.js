@@ -205,5 +205,4 @@ export {
   addTripDetails,
   updateTripItems,
   addNewItem,
-  deleteTripItem,
 };

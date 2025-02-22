@@ -1,6 +1,8 @@
 import express from "express";
-import { getAllItems } from "../controllers/items-controller.js";
-import { deleteTripItem } from "../controllers/trips-controller.js";
+import {
+  getAllItems,
+  deleteTripItem,
+} from "../controllers/items-controller.js";
 
 const router = express.Router();
 

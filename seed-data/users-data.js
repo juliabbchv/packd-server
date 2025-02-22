@@ -35,4 +35,16 @@ export default [
     password: "iloveshopping",
     name: "Joanna",
   },
+  {
+    id: 7,
+    email: "michael@example.com",
+    password: "travellover",
+    name: "Michael",
+  },
+  {
+    id: 8,
+    email: "sophia@example.com",
+    password: "adventure123",
+    name: "Sophia",
+  },
 ];
