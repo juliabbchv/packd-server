@@ -78,7 +78,7 @@ async function generatePackingList(formData) {
   6. Provide **relevant links or tips** like visa information, plug type adapters, weather, and local recommendations for the specified dates.  
   7. **Be specific** in your item lists. Items should reflect the **unique** nature of the trip, such as festival-specific gear, camping essentials, etc.
   8. Don't include printed copies.
-  9. Add exhaustive list of clothes
+  9. Add extensive list of clothes that includes essentials like socks, underwear etc, but also include very niche items specific for the trip.
 
 
   ---
